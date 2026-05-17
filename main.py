@@ -19,12 +19,13 @@ def main() -> None:
                 bonus=skill["bonus"],
                 race_id=race_obj.pk
             )
-        try:
+        guild_data = players_data[player].get("guild")
+        if guild_data:
             guild_obj, created = Guild.objects.get_or_create(
                 name=players_data[player]["guild"]["name"],
                 description=players_data[player]["guild"]["description"]
             )
-        except TypeError:
+        else:
             guild_obj.pk = None
         Player.objects.get_or_create(
             nickname=player,
